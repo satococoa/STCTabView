@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface STCTabItemView : UIView
-@property (nonatomic) BOOL selected;
+@property (nonatomic, getter = isSelected) BOOL selected;
 
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic) UIColor *textColor;

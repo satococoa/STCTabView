@@ -22,12 +22,18 @@
     STCTabItemView *item = [[STCTabItemView alloc] initWithFrame:CGRectZero];
     STCTabItemView *item2 = [[STCTabItemView alloc] initWithFrame:CGRectZero];
     STCTabItemView *item3 = [[STCTabItemView alloc] initWithFrame:CGRectZero];
+     STCTabItemView *item4 = [[STCTabItemView alloc] initWithFrame:CGRectZero];
+     STCTabItemView *item5 = [[STCTabItemView alloc] initWithFrame:CGRectZero];
     item.text = @"ああああ";
     item2.text = @"いいいいい";
     item3.text = @"ほげ";
+    item4.text = @"ほげ";
+    item5.text = @"ほげほげ";
     [self.tabView appendTabItem:item];
     [self.tabView appendTabItem:item2];
     [self.tabView appendTabItem:item3];
+    [self.tabView appendTabItem:item4];
+    [self.tabView appendTabItem:item5];
 }
 
 - (void)didReceiveMemoryWarning

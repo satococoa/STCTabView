@@ -11,10 +11,11 @@
 
 typedef NSUInteger TabIndex;
 
-@interface STCTabView : UIScrollView
+@interface STCTabView : UIView
 @property (nonatomic) UIEdgeInsets tabItemsInsets;
-@property (nonatomic) UIColor *backgroundColor;
+@property (nonatomic) UIColor *tabsBackgroundColor;
 @property (nonatomic) TabIndex selectedTabIndex;
+@property (nonatomic) CGFloat tabItemMargin;
 
 - (void)appendTabItem:(STCTabItemView *)tabItem;
 - (void)insertTabItem:(STCTabItemView *)tabItem atTabIndex:(TabIndex)tabIndex;

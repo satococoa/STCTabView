@@ -7,10 +7,12 @@
 //
 
 #import "STCTabItemView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface STCTabItemView ()
 @property (nonatomic) UILabel *textLabel;
 @property (nonatomic) UIImageView *imageView;
+@property (nonatomic) CALayer *backgroundLayer;
 
 @end
 
@@ -21,6 +23,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self setupDefaults];
+        [super setBackgroundColor:[UIColor clearColor]];
     }
     return self;
 }
@@ -30,6 +33,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setupDefaults];
+        [super setBackgroundColor:[UIColor clearColor]];
     }
     return self;
 }
@@ -47,19 +51,18 @@
     self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     [self addSubview:self.imageView];
 
-
     self.text = @"";
-    self.textColor = [UIColor darkTextColor];
-    self.selectedTextColor = [UIColor lightTextColor];
-    self.textFont = [UIFont systemFontOfSize:15];
-    self.selectedTextFont = [UIFont systemFontOfSize:15];
-    self.textInsets = UIEdgeInsetsMake(5, 8, 0, 8);
+    self.textColor = [UIColor lightTextColor];
+    self.selectedTextColor = [UIColor darkTextColor];
+    self.textFont = [UIFont systemFontOfSize:12];
+    self.selectedTextFont = [UIFont systemFontOfSize:12];
+    self.textInsets = UIEdgeInsetsMake(0, 16, 0, 16);
 
-    super.backgroundColor = [UIColor lightGrayColor];
+    self.backgroundColor = [UIColor darkGrayColor];
     self.selectedBackgroundColor = [UIColor whiteColor];
 
-    self.borderWidth = 1.0;
-    self.cornerRadius = 6.0;
+    self.borderWidth = 0.0;
+    self.cornerRadius = 10.0;
     self.borderColor = [UIColor blackColor];
     self.selectedBorderColor = [UIColor blackColor];
 
@@ -73,30 +76,71 @@
     self.textLabel.text = text;
 }
 
-- (void)setTextColor:(UIColor *)textColor
+- (void)setSelected:(BOOL)selected
 {
-    _textColor = textColor;
-    self.textLabel.textColor = textColor;
-}
-
-- (void)setTextFont:(UIFont *)textFont
-{
-    _textFont = textFont;
-    self.textLabel.font = textFont;
+    _selected = selected;
+    [self updateTextLabel];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size
 {
+    [self updateTextLabel];
     CGSize labelSize = [self.textLabel sizeThatFits:size];
     CGSize frameSize = CGSizeMake(
                              labelSize.width + self.textInsets.left + self.textInsets.right,
-                             labelSize.height + self.textInsets.top + self.textInsets.bottom);
+                             size.height);
     return frameSize;
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    [super drawRect:rect];
+
+    self.backgroundLayer = [CALayer layer];
+    self.backgroundLayer.backgroundColor = self.backgroundColor.CGColor;
+    self.backgroundLayer.frame = self.bounds;
+    [self.layer insertSublayer:self.backgroundLayer atIndex:0];
+
+    UIBezierPath *maskPath;
+    maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                     byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight)
+                                           cornerRadii:CGSizeMake(self.cornerRadius, self.cornerRadius)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = self.bounds;
+    maskLayer.path = maskPath.CGPath;
+    self.layer.mask = maskLayer;
+
+    [self updateTextLabel];
+}
+
+- (void)updateTextLabel
+{
+    if (self.isSelected) {
+        self.textLabel.textColor = self.selectedTextColor;
+        self.textLabel.font = self.selectedTextFont;
+        [self setBackgroundColor:self.selectedBackgroundColor];
+        self.layer.borderColor = self.selectedBorderColor.CGColor;
+        if (self.selectedImage) {
+            self.imageView.image = self.selectedImage;
+        }
+    } else {
+        self.textLabel.textColor = self.textColor;
+        self.textLabel.font = self.textFont;
+        [self setBackgroundColor:self.backgroundColor];
+        self.layer.borderColor = self.borderColor.CGColor;
+        if (self.image) {
+            self.imageView.image = self.image;
+        }
+    }
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    self.textLabel.frame = CGRectMake(self.textInsets.left,
+                                      0,
+                                      self.textLabel.bounds.size.width,
+                                      self.textLabel.bounds.size.height);
 }
 
 @end
