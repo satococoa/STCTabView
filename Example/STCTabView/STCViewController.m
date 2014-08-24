@@ -7,8 +7,10 @@
 //
 
 #import "STCViewController.h"
+#import <STCTabView/STCTabView.h>
 
 @interface STCViewController ()
+@property (weak, nonatomic) IBOutlet STCTabView *tabView;
 
 @end
 
@@ -17,7 +19,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    STCTabItemView *item = [[STCTabItemView alloc] initWithFrame:CGRectZero];
+    STCTabItemView *item2 = [[STCTabItemView alloc] initWithFrame:CGRectZero];
+    STCTabItemView *item3 = [[STCTabItemView alloc] initWithFrame:CGRectZero];
+    item.text = @"ああああ";
+    item2.text = @"いいいいい";
+    item3.text = @"ほげ";
+    [self.tabView appendTabItem:item];
+    [self.tabView appendTabItem:item2];
+    [self.tabView appendTabItem:item3];
 }
 
 - (void)didReceiveMemoryWarning
