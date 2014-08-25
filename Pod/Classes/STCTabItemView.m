@@ -7,6 +7,7 @@
 //
 
 #import "STCTabItemView.h"
+#import "STCTabView.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface STCTabItemView ()
@@ -49,14 +50,14 @@
 
     self.imageView = [[UIImageView alloc] initWithImage:self.image];
     self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:self.imageView];
 
     self.text = @"";
     self.textColor = [UIColor lightTextColor];
     self.selectedTextColor = [UIColor darkTextColor];
     self.textFont = [UIFont systemFontOfSize:12];
-    self.selectedTextFont = [UIFont systemFontOfSize:12];
-    self.textInsets = UIEdgeInsetsMake(0, 16, 0, 16);
+    self.textInsets = UIEdgeInsetsMake(0, 20, 0, 20);
 
     self.backgroundColor = [UIColor darkGrayColor];
     self.selectedBackgroundColor = [UIColor whiteColor];
@@ -66,8 +67,17 @@
     self.borderColor = [UIColor blackColor];
     self.selectedBorderColor = [UIColor blackColor];
 
+    self.imageMargin = 2.0;
     self.image = nil;
-    self.selectedImage = nil;
+
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSelected:)];
+    self.userInteractionEnabled = YES;
+    [self addGestureRecognizer:tapGesture];
+}
+
+- (void)didSelected:(UIGestureRecognizer *)gesture
+{
+    [self.tabView setSelectedTab:self];
 }
 
 - (void)setText:(NSString *)text
@@ -79,12 +89,12 @@
 - (void)setSelected:(BOOL)selected
 {
     _selected = selected;
-    [self updateTextLabel];
+    [self update];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size
 {
-    [self updateTextLabel];
+    [self update];
     CGSize labelSize = [self.textLabel sizeThatFits:size];
     CGSize frameSize = CGSizeMake(
                              labelSize.width + self.textInsets.left + self.textInsets.right,
@@ -110,27 +120,20 @@
     maskLayer.path = maskPath.CGPath;
     self.layer.mask = maskLayer;
 
-    [self updateTextLabel];
+    [self update];
 }
 
-- (void)updateTextLabel
+- (void)update
 {
+    self.textLabel.font = self.textFont;
     if (self.isSelected) {
         self.textLabel.textColor = self.selectedTextColor;
-        self.textLabel.font = self.selectedTextFont;
-        [self setBackgroundColor:self.selectedBackgroundColor];
+        self.backgroundLayer.backgroundColor = self.selectedBackgroundColor.CGColor;
         self.layer.borderColor = self.selectedBorderColor.CGColor;
-        if (self.selectedImage) {
-            self.imageView.image = self.selectedImage;
-        }
     } else {
         self.textLabel.textColor = self.textColor;
-        self.textLabel.font = self.textFont;
-        [self setBackgroundColor:self.backgroundColor];
+        self.backgroundLayer.backgroundColor = self.backgroundColor.CGColor;
         self.layer.borderColor = self.borderColor.CGColor;
-        if (self.image) {
-            self.imageView.image = self.image;
-        }
     }
 }
 
@@ -141,6 +144,16 @@
                                       0,
                                       self.textLabel.bounds.size.width,
                                       self.textLabel.bounds.size.height);
+    if (self.image) {
+        CGSize labelSize = [self.textLabel sizeThatFits:self.bounds.size];
+        CGSize imageSize = CGSizeMake(labelSize.height, labelSize.height);
+        self.imageView.image = self.image;
+        self.imageView.frame = CGRectMake(self.textInsets.left - self.imageMargin - imageSize.width,
+                                          (self.bounds.size.height - imageSize.height)/2.0,
+                                          imageSize.width,
+                                          imageSize.height);
+    }
+    [self layoutIfNeeded];
 }
 
 @end

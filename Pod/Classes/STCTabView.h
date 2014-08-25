@@ -14,6 +14,7 @@ typedef NSUInteger TabIndex;
 @interface STCTabView : UIView
 @property (nonatomic) UIEdgeInsets tabItemsInsets;
 @property (nonatomic) UIColor *tabsBackgroundColor;
+@property (nonatomic) STCTabItemView *selectedTab;
 @property (nonatomic) TabIndex selectedTabIndex;
 @property (nonatomic) CGFloat tabItemMargin;
 

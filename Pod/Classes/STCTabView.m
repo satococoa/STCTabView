@@ -53,7 +53,23 @@
     self.tabItemsInsets = UIEdgeInsetsMake(5, 10, 0, 10);
     self.tabItemMargin = 2;
 
-    self.selectedTabIndex = 0;
+    _selectedTabIndex = 0;
+}
+
+- (void)setSelectedTab:(STCTabItemView *)selectedTab
+{
+    _selectedTabIndex = [self.tabItems indexOfObject:selectedTab];
+    _selectedTab = selectedTab;
+    for (STCTabItemView *tabItem in self.tabItems) {
+        tabItem.selected = (tabItem == _selectedTab);
+    }
+    [self layoutSubviews];
+}
+
+- (void)setSelectedTabIndex:(TabIndex)selectedTabIndex
+{
+    STCTabItemView *selectedTab = self.tabItems[selectedTabIndex];
+    [self setSelectedTab:selectedTab];
 }
 
 - (void)setTabsBackgroundColor:(UIColor *)tabsBackgroundColor
@@ -64,13 +80,32 @@
 
 - (void)appendTabItem:(STCTabItemView *)tabItem
 {
-    [self.tabItems addObject:tabItem];
+    tabItem.tabView = self;
     [self.scrollView addSubview:tabItem];
+
+    [self.tabItems addObject:tabItem];
 }
 
-- (void)setTabItemsInsets:(UIEdgeInsets)tabItemsInsets
+- (void)insertTabItem:(STCTabItemView *)tabItem atTabIndex:(TabIndex)tabIndex
 {
-    self.scrollView.contentInset = tabItemsInsets;
+    tabItem.tabView = self;
+    [self.scrollView addSubview:tabItem];
+
+    [self.tabItems insertObject:tabItem atIndex:tabIndex];
+    [self layoutSubviews];
+}
+
+- (void)removeTabItem:(STCTabItemView *)tabItem
+{
+    [self.tabItems removeObject:tabItem];
+    [tabItem removeFromSuperview];
+    [self layoutSubviews];
+}
+
+- (void)removeTabItemAtTabIndex:(TabIndex)tabIndex
+{
+    STCTabItemView *removedTab = self.tabItems[tabIndex];
+    [self removeTabItem:removedTab];
 }
 
 - (void)drawRect:(CGRect)rect
@@ -86,8 +121,9 @@
 {
     [super layoutSubviews];
 
+    self.scrollView.contentInset = self.tabItemsInsets;
     self.scrollView.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height - 5);
-    CGFloat contentHeight = self.scrollView.bounds.size.height - self.tabItemsInsets.top - self.tabItemsInsets.bottom - 5;
+    CGFloat contentHeight = self.scrollView.bounds.size.height - 5; // 下部の区切り線 + border(1pt)
 
     CGFloat currentTabsWidth = 0;
     for (STCTabItemView *tabItem in self.tabItems) {
