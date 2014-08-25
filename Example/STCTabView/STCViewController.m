@@ -51,7 +51,7 @@
     });
 
     [self.tabView setSelectedTabIndexChangedHandler:^(TabIndex tabIndex) {
-        NSLog(@"選択: %d", tabIndex);
+        NSLog(@"選択: %ld", (long)tabIndex);
     }];
 }
 

@@ -14,7 +14,7 @@
 @property (nonatomic) UILabel *textLabel;
 @property (nonatomic) UIImageView *imageView;
 @property (nonatomic) CALayer *backgroundLayer;
-
+@property (nonatomic) CAShapeLayer *maskLayer;
 @end
 
 @implementation STCTabItemView
@@ -70,6 +70,11 @@
     self.imageMargin = 2.0;
     self.image = nil;
 
+    self.backgroundLayer = [CALayer layer];
+    [self.layer insertSublayer:self.backgroundLayer atIndex:0];
+    self.maskLayer = [[CAShapeLayer alloc] init];
+    self.layer.mask = self.maskLayer;
+
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSelected:)];
     self.userInteractionEnabled = YES;
     [self addGestureRecognizer:tapGesture];
@@ -105,20 +110,15 @@
 - (void)drawRect:(CGRect)rect
 {
     [super drawRect:rect];
-
-    self.backgroundLayer = [CALayer layer];
     self.backgroundLayer.backgroundColor = self.backgroundColor.CGColor;
     self.backgroundLayer.frame = self.bounds;
-    [self.layer insertSublayer:self.backgroundLayer atIndex:0];
 
     UIBezierPath *maskPath;
     maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
                                      byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight)
                                            cornerRadii:CGSizeMake(self.cornerRadius, self.cornerRadius)];
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    maskLayer.frame = self.bounds;
-    maskLayer.path = maskPath.CGPath;
-    self.layer.mask = maskLayer;
+    self.maskLayer.frame = self.bounds;
+    self.maskLayer.path = maskPath.CGPath;
 
     [self update];
 }
@@ -153,7 +153,6 @@
                                           imageSize.width,
                                           imageSize.height);
     }
-    [self layoutIfNeeded];
 }
 
 @end
