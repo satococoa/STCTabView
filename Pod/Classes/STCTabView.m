@@ -93,6 +93,7 @@
     [self.scrollView addSubview:tabItem];
 
     [self.tabItems addObject:tabItem];
+    [self layoutSubviews];
 }
 
 - (void)insertTabItem:(STCTabItemView *)tabItem atTabIndex:(TabIndex)tabIndex
