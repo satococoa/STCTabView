@@ -14,9 +14,10 @@ typedef NSUInteger TabIndex;
 @interface STCTabView : UIView
 @property (nonatomic) UIEdgeInsets tabItemsInsets;
 @property (nonatomic) UIColor *tabsBackgroundColor;
-@property (nonatomic) STCTabItemView *selectedTab;
 @property (nonatomic) TabIndex selectedTabIndex;
 @property (nonatomic) CGFloat tabItemMargin;
+
+- (void)setSelectedTab:(STCTabItemView *)selectedTab;
 
 @property (nonatomic, copy) void (^selectedTabIndexChangedHandler)(TabIndex tabIndex);
 - (void)setSelectedTabIndexChangedHandler:(void (^)(TabIndex tabIndex))selectedTabIndexChangedHandler;
@@ -25,4 +26,5 @@ typedef NSUInteger TabIndex;
 - (void)insertTabItem:(STCTabItemView *)tabItem atTabIndex:(TabIndex)tabIndex;
 - (void)removeTabItem:(STCTabItemView *)tabItem;
 - (void)removeTabItemAtTabIndex:(TabIndex)tabIndex;
+- (void)removeAllTabItems;
 @end

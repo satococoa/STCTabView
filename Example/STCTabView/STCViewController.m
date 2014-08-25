@@ -26,6 +26,8 @@
     STCTabItemView *item5 = [[STCTabItemView alloc] initWithFrame:CGRectZero];
     item.text = @"ああああ";
     item2.text = @"いいいいい";
+    item2.backgroundColor = [UIColor blueColor];
+    item2.selectedBackgroundColor = [UIColor greenColor];
     item3.text = @"ほげ";
     item4.text = @"ほげ";
     item4.image = [UIImage imageNamed:@"star"];

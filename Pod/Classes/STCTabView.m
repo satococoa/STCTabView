@@ -13,6 +13,7 @@
 @property (nonatomic) UIScrollView *scrollView;
 @property (nonatomic) NSMutableArray *tabItems;
 @property (nonatomic) CALayer *borderLayer;
+@property (nonatomic) CALayer *backgroundLayer;
 @end
 
 @implementation STCTabView
@@ -37,6 +38,10 @@
 
 - (void)setupDefaults
 {
+    self.backgroundLayer = [CALayer layer];
+    self.backgroundLayer.backgroundColor = self.backgroundColor.CGColor;
+    [self.layer insertSublayer:self.backgroundLayer atIndex:0];
+
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
@@ -59,10 +64,10 @@
 - (void)setSelectedTab:(STCTabItemView *)selectedTab
 {
     _selectedTabIndex = [self.tabItems indexOfObject:selectedTab];
-    _selectedTab = selectedTab;
     for (STCTabItemView *tabItem in self.tabItems) {
-        tabItem.selected = (tabItem == _selectedTab);
+        tabItem.selected = (tabItem == selectedTab);
     }
+    self.backgroundLayer.backgroundColor = selectedTab.selectedBackgroundColor.CGColor;
     [self layoutSubviews];
 
     if (self.selectedTabIndexChangedHandler) {
@@ -112,18 +117,27 @@
     [self removeTabItem:removedTab];
 }
 
+- (void)removeAllTabItems
+{
+    for (STCTabItemView *item in self.tabItems) {
+        [self removeTabItem:item];
+    }
+}
+
 - (void)drawRect:(CGRect)rect
 {
     [super drawRect:rect];
 
     STCTabItemView *selectedTabItem = self.tabItems[self.selectedTabIndex];
     selectedTabItem.selected = YES;
-    self.backgroundColor = selectedTabItem.selectedBackgroundColor;
+    self.backgroundLayer.backgroundColor = selectedTabItem.selectedBackgroundColor.CGColor;
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+
+    self.backgroundLayer.frame = self.bounds;
 
     self.scrollView.contentInset = self.tabItemsInsets;
     self.scrollView.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height - 5);
