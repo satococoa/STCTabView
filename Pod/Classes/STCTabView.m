@@ -159,7 +159,7 @@
     // マージンが一つ余計なので引く
     CGFloat contentWidth = currentTabsWidth - self.tabItemMargin;
     self.scrollView.contentSize = CGSizeMake(contentWidth, contentHeight);
-    self.borderLayer.frame = CGRectMake(0, self.bounds.size.height + 1, self.bounds.size.width, 1);
+    self.borderLayer.frame = CGRectMake(0, self.bounds.size.height, self.bounds.size.width, 1);
 }
 
 @end
