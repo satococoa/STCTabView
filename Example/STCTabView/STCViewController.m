@@ -44,6 +44,13 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.tabView removeTabItemAtTabIndex:2];
     });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.tabView setSelectedTabIndex:1];
+    });
+
+    [self.tabView setSelectedTabIndexChangedHandler:^(TabIndex tabIndex) {
+        NSLog(@"選択: %d", tabIndex);
+    }];
 }
 
 - (void)didReceiveMemoryWarning

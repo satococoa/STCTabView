@@ -64,6 +64,10 @@
         tabItem.selected = (tabItem == _selectedTab);
     }
     [self layoutSubviews];
+
+    if (self.selectedTabIndexChangedHandler) {
+        self.selectedTabIndexChangedHandler(_selectedTabIndex);
+    }
 }
 
 - (void)setSelectedTabIndex:(TabIndex)selectedTabIndex

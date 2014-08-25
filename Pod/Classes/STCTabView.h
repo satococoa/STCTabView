@@ -18,6 +18,9 @@ typedef NSUInteger TabIndex;
 @property (nonatomic) TabIndex selectedTabIndex;
 @property (nonatomic) CGFloat tabItemMargin;
 
+@property (nonatomic, copy) void (^selectedTabIndexChangedHandler)(TabIndex tabIndex);
+- (void)setSelectedTabIndexChangedHandler:(void (^)(TabIndex tabIndex))selectedTabIndexChangedHandler;
+
 - (void)appendTabItem:(STCTabItemView *)tabItem;
 - (void)insertTabItem:(STCTabItemView *)tabItem atTabIndex:(TabIndex)tabIndex;
 - (void)removeTabItem:(STCTabItemView *)tabItem;
