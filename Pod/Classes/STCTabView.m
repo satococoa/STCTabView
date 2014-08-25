@@ -79,6 +79,7 @@
 {
     STCTabItemView *selectedTab = self.tabItems[selectedTabIndex];
     [self setSelectedTab:selectedTab];
+    [self.scrollView scrollRectToVisible:selectedTab.frame animated:YES];
 }
 
 - (void)setTabsBackgroundColor:(UIColor *)tabsBackgroundColor
