@@ -46,6 +46,7 @@
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.scrollView.scrollEnabled = YES;
+    self.scrollView.scrollsToTop = NO;
     [self addSubview:self.scrollView];
 
     self.borderLayer = [CALayer layer];
