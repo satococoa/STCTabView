@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/cocoapods/l/STCTabView.svg?style=flat)](http://cocoadocs.org/docsets/STCTabView)
 [![Platform](https://img.shields.io/cocoapods/p/STCTabView.svg?style=flat)](http://cocoadocs.org/docsets/STCTabView)
 
+![screenshot](https://github.com/satococoa/STCTabView/blob/master/meta/screen1.png)
+
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
@@ -25,4 +27,3 @@ Satoshi Ebisawa, e.satoshi@gmail.com
 ## License
 
 STCTabView is available under the MIT license. See the LICENSE file for more info.
-
