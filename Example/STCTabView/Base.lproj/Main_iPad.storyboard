@@ -24,14 +24,27 @@
                                     <constraint firstAttribute="height" constant="41" id="wUs-dO-2LH"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tab #0 has been selected!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EbC-b3-cx2">
+                                <rect key="frame" x="284" y="502" width="201" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
+                            <constraint firstAttribute="centerY" secondItem="EbC-b3-cx2" secondAttribute="centerY" id="1ta-l6-mob"/>
                             <constraint firstItem="YgK-Qk-cEV" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="B7f-as-sni"/>
                             <constraint firstAttribute="trailing" secondItem="YgK-Qk-cEV" secondAttribute="trailing" id="K0Z-8m-lX5"/>
                             <constraint firstItem="YgK-Qk-cEV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="OhS-oi-Mz9"/>
+                            <constraint firstAttribute="centerX" secondItem="EbC-b3-cx2" secondAttribute="centerX" id="xdt-U8-rBp"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="label" destination="EbC-b3-cx2" id="PQH-J3-GbF"/>
+                        <outlet property="tabView" destination="YgK-Qk-cEV" id="jGb-46-ej2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

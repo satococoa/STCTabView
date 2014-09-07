@@ -24,15 +24,25 @@
                                     <constraint firstAttribute="height" constant="41" id="6Ea-Nx-CMA"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tab #0 has been selected!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7AL-oJ-Udx">
+                                <rect key="frame" x="60" y="274" width="201" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="2Cl-iq-c01" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="NrG-KC-48M"/>
                             <constraint firstAttribute="trailing" secondItem="2Cl-iq-c01" secondAttribute="trailing" id="QaM-yJ-Ve1"/>
+                            <constraint firstAttribute="centerX" secondItem="7AL-oJ-Udx" secondAttribute="centerX" id="rOg-LA-JDm"/>
                             <constraint firstItem="2Cl-iq-c01" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="uRh-gQ-L57"/>
+                            <constraint firstAttribute="centerY" secondItem="7AL-oJ-Udx" secondAttribute="centerY" id="utU-KY-jXN"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="label" destination="7AL-oJ-Udx" id="7f0-Nl-aHY"/>
                         <outlet property="tabView" destination="2Cl-iq-c01" id="K7y-2Y-Jiq"/>
                     </connections>
                 </viewController>

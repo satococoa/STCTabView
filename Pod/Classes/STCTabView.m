@@ -131,9 +131,11 @@
 {
     [super drawRect:rect];
 
-    STCTabItemView *selectedTabItem = self.tabItems[self.selectedTabIndex];
-    selectedTabItem.selected = YES;
-    self.backgroundLayer.backgroundColor = selectedTabItem.selectedBackgroundColor.CGColor;
+    if (self.tabItems.count > 0) {
+        STCTabItemView *selectedTabItem = self.tabItems[self.selectedTabIndex];
+        selectedTabItem.selected = YES;
+        self.backgroundLayer.backgroundColor = selectedTabItem.selectedBackgroundColor.CGColor;
+    }
 }
 
 - (void)layoutSubviews
